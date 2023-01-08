@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+</head>
+
+<body>
+    <div id="main">
+        <div id="sidenav">
+            <div class="heading">
+                <a href="/"><h1>Sasta VS Code</h1></a>
+                <div class="icons">
+                    <i title="create file" id="filebtn" class="ri-add-line"></i>
+                    <i title="create folder" id="folderbtn" class="ri-folder-add-line"></i>
+                    <a title="refresh" href="/"><i class="ri-refresh-fill"></i></a>
+                </div>
+            </div>
+<!-- for file -->
+            <div id="filecreate">
+                <form action="/filecreate">
+                        <input name="filename" type="text" placeholder="filename">
+                </form>
+
+            </div>
+  <!-- for folder      -->
+  <div id="foldercreate">
+    <form action="/foldercreate">
+            <input name="foldername" type="text" placeholder="foldername">
+    </form>
+
+</div>
+            <div class="files">
+                <% data.forEach(function(elem){ %>
+                    <div class="file">
+                        <div class="name">
+                            <% if(elem.isFolder){ %>
+                                <i class="ri-folder-3-fill"></i>
+                                <%=elem.name%>
+                            <% }else{ %>
+                            <i class="ri-profile-line"></i>
+                            <a href="/file/<%=elem.name%>"><%=elem.name%></a>
+                        <% } %>
+                        </div>
+                        <a href="/delete/<%=elem.name%>"><i class="ri-delete-bin-6-line"></i></a>
+                    </div>
+              <% }) %>
+            </div>
+        </div>
+        <div id="code">
+            <%if(filename.length>0){%> 
+            <div class="codenav">
+                <div class="textfile">
+                    <div class="file">
+                        <div class="name">
+                            <i class="ri-profile-line"></i>
+                            <%=filename%>
+                        </div>
+                       <a href="/"> <i class="ri-close-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+            <form action="/save/<%= filename %>" method="post">
+                <textarea name="filedata"><%=filedata%></textarea>
+                <input id="btn" type="submit" value="save">
+            </form>
+       <% } else{ %>
+            <small>File is not open</small>
+        <% } %>
+        </div>
+    </div>
+    <script>
+        function FileformHandle(){
+
+            var formflage = 0;
+    document.querySelector('#filebtn').addEventListener("click",function(){
+
+        if(formflage === 0){
+        document.querySelector("#filecreate").style.display = "block"
+                formflage = 1;
+
+        }
+        else{
+
+            document.querySelector("#filecreate").style.display = "none"
+            formflage = 0;
+
+        }
+
+    })       
+        }
+
+        function FolderHandle(){
+
+            var folderflage = 0;
+    document.querySelector("#folderbtn").addEventListener("click",function(){
+
+        if(folderflage === 0){
+        document.querySelector("#foldercreate").style.display = "block"
+                folderflage = 1;
+
+        }
+        else{
+
+            document.querySelector("#foldercreate").style.display = "none"
+            folderflage = 0;
+
+        }
+
+    })       
+        }
+
+ FileformHandle();
+ FolderHandle();
+    </script>
+</body>
+
+</html>
